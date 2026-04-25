@@ -71,20 +71,24 @@ int main() {
                 break;
             }
             case 7: {
-                int freqs[256] = {0}; // Tableau pour l'ASCII
+                int freqs[256] = {0}; 
                 char nomF[100];
                 printf("Nom du fichier à analyser pour la compression : ");
                 scanf("%s", nomF);
                 
+                // 1. Analyse
                 analyser_frequences(nomF, freqs);
+                
+                // 2. Construction de l'arbre
                 Node* racine = construire_arbre(freqs);
                 printf("Arbre de Huffman construit avec succes.\n");
-                printf("Frequences analysees (aperçu) :\n");
-                for(int i = 0; i < 256; i++) {
-                    if(freqs[i] > 0) {
-                        printf("'%c' : %d fois\n", i, freqs[i]);
-                    }
-                }
+                
+                // 3. Génération et affichage des codes (AJOUT ICI)
+                char code[256];
+                printf("\n--- Codes de compression générés ---\n");
+                generer_codes(racine, code, 0);
+                printf("------------------------------------\n");
+                
                 break;
             }
             case 8:
