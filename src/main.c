@@ -77,7 +77,8 @@ int main() {
                 scanf("%s", nomF);
                 
                 analyser_frequences(nomF, freqs);
-                
+                Node* racine = construire_arbre(freqs);
+                printf("Arbre de Huffman construit avec succes.\n");
                 printf("Frequences analysees (aperçu) :\n");
                 for(int i = 0; i < 256; i++) {
                     if(freqs[i] > 0) {
