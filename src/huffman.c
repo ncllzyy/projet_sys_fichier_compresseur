@@ -66,3 +66,26 @@ Node* construire_arbre(int* tableFrequences) {
     }
     return nodes[0]; // La racine de l'arbre
 }
+// Fonction récursive pour générer les codes (0 et 1)
+void generer_codes(Node* racine, char* codeActuel, int niveau) {
+    if (!racine) return;
+
+    // Si c'est une feuille (un caractère)
+    if (!racine->left && !racine->right) {
+        codeActuel[niveau] = '\0';
+        printf("Code pour '%c' : %s\n", racine->character, codeActuel);
+        return;
+    }
+
+    // On ajoute '0' pour la gauche
+    if (racine->left) {
+        codeActuel[niveau] = '0';
+        generer_codes(racine->left, codeActuel, niveau + 1);
+    }
+
+    // On ajoute '1' pour la droite
+    if (racine->right) {
+        codeActuel[niveau] = '1';
+        generer_codes(racine->right, codeActuel, niveau + 1);
+    }
+}
