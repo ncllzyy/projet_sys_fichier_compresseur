@@ -1,12 +1,20 @@
 #include "huffman.h"
-#include <stdio.h>
 #include <stdlib.h>
 
-// Étape 1 : Analyser le fichier pour compter les fréquences
+// Crée un nouveau nœud pour l'arbre
+Node* create_node(unsigned char c, int freq) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->character = c;
+    newNode->frequency = freq;
+    newNode->left = newNode->right = NULL;
+    return newNode;
+}
+
+// Compte combien de fois chaque caractère apparaît dans le fichier
 void analyser_frequences(char* nomFichier, int* tableFrequences) {
     FILE* f = fopen(nomFichier, "r");
     if (!f) {
-        printf("Erreur lors de l'ouverture du fichier.\n");
+        printf("Erreur : Impossible d'ouvrir le fichier pour analyse.\n");
         return;
     }
 
@@ -17,8 +25,3 @@ void analyser_frequences(char* nomFichier, int* tableFrequences) {
 
     fclose(f);
 }
-
-// Les prochaines étapes seront :
-// - Construire l'arbre de Huffman
-// - Générer les codes binaires
-// - Compresser le fichier
