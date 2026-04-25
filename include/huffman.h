@@ -14,4 +14,6 @@ typedef struct Node {
 void analyser_frequences(char* nomFichier, int* tableFrequences);
 Node* create_node(unsigned char c, int freq);
 Node* construire_arbre(int* tableFrequences);
+
+void generer_codes(Node* racine, char* codeActuel, int niveau);
 #endif
