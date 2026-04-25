@@ -25,4 +25,9 @@ typedef struct Directory {
 Directory* create_directory(char* name, Directory* parent);
 void list_content(Directory* current);
 
+Directory* change_directory(Directory* current, char* name);
+void create_file(Directory* current, char* name, char* content);
+void read_file(Directory* current, char* name);
+void delete_file(Directory* current, char* name);
+
 #endif
