@@ -70,10 +70,22 @@ int main() {
                 delete_file(currentDir, name);
                 break;
             }
-            case 7:
-                printf("\n--- Mode Huffman ---\n");
-                printf("Analyse de fréquence bientôt disponible...\n");
+            case 7: {
+                int freqs[256] = {0}; // Tableau pour l'ASCII
+                char nomF[100];
+                printf("Nom du fichier à analyser pour la compression : ");
+                scanf("%s", nomF);
+                
+                analyser_frequences(nomF, freqs);
+                
+                printf("Frequences analysees (aperçu) :\n");
+                for(int i = 0; i < 256; i++) {
+                    if(freqs[i] > 0) {
+                        printf("'%c' : %d fois\n", i, freqs[i]);
+                    }
+                }
                 break;
+            }
             case 8:
                 printf("Fermeture du programme.\n");
                 break;
