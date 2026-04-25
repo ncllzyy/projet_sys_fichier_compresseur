@@ -66,3 +66,34 @@ Directory* change_directory(Directory* current, char* name) {
     printf("Répertoire '%s' introuvable.\n", name);
     return current;
 }
+// Fonction pour lire le contenu d'un fichier
+void read_file(Directory* current, char* name) {
+    File* f = current->files;
+    while (f) {
+        if (strcmp(f->name, name) == 0) {
+            printf("\n--- Contenu de %s ---\n%s\n------------------\n", f->name, f->content);
+            return;
+        }
+        f = f->next;
+    }
+    printf("Fichier '%s' introuvable.\n", name);
+}
+
+// Fonction pour supprimer un fichier
+void delete_file(Directory* current, char* name) {
+    File *f = current->files, *prev = NULL;
+    while (f) {
+        if (strcmp(f->name, name) == 0) {
+            if (prev == NULL) current->files = f->next;
+            else prev->next = f->next;
+            
+            free(f->content);
+            free(f);
+            printf("Fichier '%s' supprime.\n", name);
+            return;
+        }
+        prev = f;
+        f = f->next;
+    }
+    printf("Impossible de supprimer : '%s' non trouve.\n", name);
+}
