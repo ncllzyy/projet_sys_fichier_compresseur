@@ -33,3 +33,18 @@ void list_content(Directory* current) {
         f = f->next;
     }
 }
+// Fonction pour créer un fichier dans le répertoire actuel
+void create_file(Directory* current, char* name, char* content) {
+    File* new_file = (File*)malloc(sizeof(File));
+    if (!new_file) return;
+
+    strcpy(new_file->name, name);
+    new_file->content = strdup(content); // Duplique la chaîne de texte
+    new_file->size = strlen(content);
+    
+    // Ajout en tête de la liste chaînée du répertoire
+    new_file->next = current->files;
+    current->files = new_file;
+    
+    printf("Fichier '%s' cree avec succes.\n", name);
+}
