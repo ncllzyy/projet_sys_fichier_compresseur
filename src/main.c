@@ -1,22 +1,30 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "fs.h"
 #include "huffman.h"
 
 int main() {
-    // Initialisation du système de fichiers avec un répertoire racine "/"
+    // Initialisation : on crée la racine du système
     Directory* root = create_directory("root", NULL);
     Directory* currentDir = root;
     int choix;
 
     do {
-        printf("\n--- MENU PRINCIPAL ---\n");
+        printf("\n========================================\n");
+        printf("  DOSSIER ACTUEL : %s\n", currentDir->name);
+        printf("========================================\n");
         printf("1. Lister le contenu (ls)\n");
-        printf("2. Creer un répertoire (mkdir)\n");
-        printf("3. Compresser un fichier (Huffman)\n");
-        printf("4. Quitter\n");
+        printf("2. Creer un repertoire (mkdir)\n");
+        printf("3. Creer un fichier (touch)\n");
+        printf("4. Naviguer (cd)\n");
+        printf("5. Lire un fichier (cat)\n");
+        printf("6. Supprimer un fichier (rm)\n");
+        printf("7. PASSER A LA COMPRESSION (Huffman)\n");
+        printf("8. Quitter\n");
         printf("Choix : ");
-        scanf("%d", &choix);
+        
+        if (scanf("%d", &choix) != 1) break;
 
         switch(choix) {
             case 1:
@@ -27,22 +35,52 @@ int main() {
                 printf("Nom du nouveau répertoire : ");
                 scanf("%s", name);
                 Directory* new_sub = create_directory(name, currentDir);
-                // On l'ajoute à la liste des sous-répertoires
                 new_sub->next = currentDir->sub_dirs;
                 currentDir->sub_dirs = new_sub;
-                printf("Répertoire '%s' créé.\n", name);
+                printf("Répertoire créé.\n");
                 break;
             }
-            case 3:
-                printf("Fonction Huffman bientôt disponible...\n");
+            case 3: {
+                char name[100], content[255];
+                printf("Nom du fichier : ");
+                scanf("%s", name);
+                printf("Contenu : ");
+                scanf(" %[^\n]s", content);
+                create_file(currentDir, name, content);
                 break;
-            case 4:
-                printf("Au revoir !\n");
+            }
+            case 4: {
+                char name[100];
+                printf("Nom du dossier (ou ..) : ");
+                scanf("%s", name);
+                currentDir = change_directory(currentDir, name);
+                break;
+            }
+            case 5: {
+                char name[100];
+                printf("Nom du fichier à lire : ");
+                scanf("%s", name);
+                read_file(currentDir, name);
+                break;
+            }
+            case 6: {
+                char name[100];
+                printf("Nom du fichier à supprimer : ");
+                scanf("%s", name);
+                delete_file(currentDir, name);
+                break;
+            }
+            case 7:
+                printf("\n--- Mode Huffman ---\n");
+                printf("Analyse de fréquence bientôt disponible...\n");
+                break;
+            case 8:
+                printf("Fermeture du programme.\n");
                 break;
             default:
                 printf("Option invalide.\n");
         }
-    } while (choix != 4);
+    } while (choix != 8);
 
     return 0;
 }
