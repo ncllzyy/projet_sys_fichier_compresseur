@@ -25,3 +25,44 @@ void analyser_frequences(char* nomFichier, int* tableFrequences) {
 
     fclose(f);
 }
+// Fonction pour construire l'arbre de Huffman
+Node* construire_arbre(int* tableFrequences) {
+    Node* nodes[256];
+    int count = 0;
+
+    // 1. Créer un nœud pour chaque caractère existant
+    for (int i = 0; i < 256; i++) {
+        if (tableFrequences[i] > 0) {
+            nodes[count++] = create_node((unsigned char)i, tableFrequences[i]);
+        }
+    }
+
+    // 2. Assembler l'arbre
+    while (count > 1) {
+        // Trier pour avoir les deux plus petits au début (méthode simple)
+        for (int i = 0; i < count - 1; i++) {
+            for (int j = i + 1; j < count; j++) {
+                if (nodes[i]->frequency > nodes[j]->frequency) {
+                    Node* temp = nodes[i];
+                    nodes[i] = nodes[j];
+                    nodes[j] = temp;
+                }
+            }
+        }
+
+        // Créer un parent pour les deux plus petits
+        Node* left = nodes[0];
+        Node* right = nodes[1];
+        Node* parent = create_node('\0', left->frequency + right->frequency);
+        parent->left = left;
+        parent->right = right;
+
+        // Remplacer les deux nœuds par le parent
+        nodes[0] = parent;
+        for (int i = 1; i < count - 1; i++) {
+            nodes[i] = nodes[i + 1];
+        }
+        count--;
+    }
+    return nodes[0]; // La racine de l'arbre
+}
