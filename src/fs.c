@@ -48,3 +48,21 @@ void create_file(Directory* current, char* name, char* content) {
     
     printf("Fichier '%s' cree avec succes.\n", name);
 }
+// Fonction pour changer de répertoire
+Directory* change_directory(Directory* current, char* name) {
+    // Revenir en arrière
+    if (strcmp(name, "..") == 0) {
+        if (current->parent != NULL) return current->parent;
+        return current;
+    }
+
+    // Aller dans un sous-dossier
+    Directory* d = current->sub_dirs;
+    while (d) {
+        if (strcmp(d->name, name) == 0) return d;
+        d = d->next;
+    }
+
+    printf("Répertoire '%s' introuvable.\n", name);
+    return current;
+}
