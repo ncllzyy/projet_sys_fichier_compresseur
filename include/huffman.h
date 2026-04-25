@@ -13,7 +13,5 @@ typedef struct Node {
 // Prototypes
 void analyser_frequences(char* nomFichier, int* tableFrequences);
 Node* create_node(unsigned char c, int freq);
-analyser_frequences(nomF, freqs);
-                Node* racine = construire_arbre(freqs);
-                printf("Arbre de Huffman construit avec succes.\n");
+Node* construire_arbre(int* tableFrequences);
 #endif
