@@ -1,4 +1,4 @@
-# Projet Système de Fichiers et Compresseur Huffman
+# Projet Système de Fichiers et Compresseur
 
 Ce projet en langage C simule un système de gestion de fichiers et propose un outil de compression basé sur l'algorithme de Huffman.
 
